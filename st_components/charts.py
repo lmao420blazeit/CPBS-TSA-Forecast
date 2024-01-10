@@ -48,4 +48,6 @@ def ts_plotly_chart(target, data):
                                 )
                         )
     
+    __colour_pallete = px.colors.qualitative.Alphabet # reassign colour pallete to original values
+
     return st.plotly_chart(fig, use_container_width=True)
