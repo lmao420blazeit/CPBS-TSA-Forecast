@@ -2,3 +2,4 @@ statsmodels
 pandas
 streamlit
 scikit-learn
+plotly
