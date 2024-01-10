@@ -42,7 +42,7 @@ def main():
                                      seasonal="mul", 
                                      use_boxcox=False, 
                                      initialization_method="estimated"),
-                                     "HW-Mult"],
+                                     "HW-Multiplicative"],
                 [ExponentialSmoothing(endog = target, 
                                      seasonal_periods=12, 
                                      trend="add", 
@@ -58,7 +58,7 @@ def main():
                                      use_boxcox=False,
                                      damped_trend = True,
                                      initialization_method="estimated"),
-                                     "HW-Additive-damped-trend"]]                                     
+                                     "HW-Multiplicative-damped-trend"]]                                     
     
 
     # build models
