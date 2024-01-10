@@ -33,7 +33,8 @@ def ts_plotly_chart(target, data):
                             name = __model,
                             opacity=0.5,
                         line=dict(width=2,
-                                    color=__colour_pallete.pop())
+                                    color=__colour_pallete.pop(),
+                                    dash = 'dot')
                         )
                 )
         
@@ -42,8 +43,8 @@ def ts_plotly_chart(target, data):
         go.Scatter(x=target.index, 
                                  y=target, 
                                  name = target.name,
-                                line=dict(width=4,
-                                          color="black")
+                                line=dict(width=3,
+                                          color="white")
                                 )
                         )
     

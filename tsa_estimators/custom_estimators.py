@@ -1,6 +1,6 @@
 import sklearn.metrics
 import pandas as pd
-from base_estimator import EstimatorTemplate
+from tsa_estimators.base_estimator import EstimatorTemplate
 
 class StackedEstimator(EstimatorTemplate):
 

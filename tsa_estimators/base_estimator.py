@@ -1,7 +1,5 @@
-from statsmodels.tsa.holtwinters import ExponentialSmoothing, SimpleExpSmoothing
 import sklearn.metrics
 import pandas as pd
-from statsmodels.tsa.arima.model import ARIMA
 import statsmodels.api as sm
 import abc
 #import statistics
@@ -31,14 +29,15 @@ class BaseEstimator(EstimatorTemplate):
     """
     Interface class for statsmodels.tsa models
     """
-    def __init__(self, model_obj):
+    def __init__(self, model_obj, alias = ""):
         self.model_obj = model_obj # keep track of base model
         self.base_model = model_obj.fit()
+        self.alias = (alias if alias not in [None, ""] else self.model_obj.__class__.__name__)
     
 
     def predict(self, timestep):
         df = self.base_model.predict(timestep)
-        df.name = str(self.model_obj.__class__.__name__)
+        df.name = str(self.alias)
         return(df)
 
     def get_metrics(self, 
@@ -50,7 +49,7 @@ class BaseEstimator(EstimatorTemplate):
         metrics_list = [getattr(sklearn.metrics, x) for x in metrics]
         metrics_ = pd.DataFrame(index = [x.__name__ for x in metrics_list],
                                 data = [x(target, model_pred) for x in metrics_list], 
-                                columns = [self.model_obj.__class__.__name__])
+                                columns = [self.alias])
         return (metrics_)
 
     @property
@@ -58,7 +57,7 @@ class BaseEstimator(EstimatorTemplate):
         params = pd.DataFrame(
             index=[__key for __key in self.base_model.params.keys()]
         )
-        params[self.model_obj.__class__.__name__] = self.base_model.params
+        params[self.alias] = self.base_model.params
         return(params)
     
     @property
@@ -66,13 +65,12 @@ class BaseEstimator(EstimatorTemplate):
         params = pd.DataFrame(
             index=[__key for __key in self.base_model.resid.index]
         )
-        params[self.model_obj.__class__.__name__] = self.base_model.resid
+        params[self.alias] = self.base_model.resid
         return(params)
     
     def forecast(self, steps):
         forecast = self.base_model.forecast(steps = steps)
-        forecast.name = self.model_obj.__class__.__name__
-        print(forecast)
+        forecast.name = self.alias
         return (forecast)
     
     @property

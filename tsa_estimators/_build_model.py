@@ -1,6 +1,6 @@
 import pandas as pd
-from base_estimator import BaseEstimator
-from custom_estimators import StackedEstimator
+from tsa_estimators.base_estimator import BaseEstimator
+from tsa_estimators.custom_estimators import StackedEstimator
 
 
 def build_model(models: list[BaseEstimator], target: pd.DataFrame, timestamps = None):

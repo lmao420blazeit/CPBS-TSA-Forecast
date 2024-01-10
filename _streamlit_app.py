@@ -1,15 +1,21 @@
 import pandas as pd
 from statsmodels.tsa.holtwinters import ExponentialSmoothing, SimpleExpSmoothing
-from statsmodels.tsa.arima.model import ARIMA
-from _build_model import build_model
+#from statsmodels.tsa.arima.model import ARIMA
+from tsa_estimators._build_model import build_model
 import streamlit as st
 from st_components.charts import plot_res, ts_plotly_chart
 from st_components.selectbox import variable_selectbox
-from custom_estimators import StackedEstimator
+from tsa_estimators.custom_estimators import StackedEstimator
+#import sys, inspect
+
+#clsmembers = inspect.getmembers(statsmodels.tsa.holtwinters, inspect.isclass)
+#print(clsmembers)
+#print(inspect.getargspec(SimpleExpSmoothing.__init__))
 
 # Streamlit app
 def main():
     data = pd.read_csv("data.csv")
+    data = data[data.ESTAB_NAME != 'NAMPULA']
     st.set_option('deprecation.showPyplotGlobalUse', True)
 
     st. set_page_config(page_title="Time Series Forecasting",
@@ -27,9 +33,7 @@ def main():
                                      trend="add", 
                                      seasonal="add", 
                                      use_boxcox=False, 
-                                     initialization_method="estimated"),
-                ARIMA(endog= target, 
-                      order=(3, 1, 0))]
+                                     initialization_method="estimated")]
     
 
     # build models
@@ -43,13 +47,16 @@ def main():
                      target = target
                      )
     
+    # generate stacking estimator prediction and concat to baseestimators
     se_pred = se.predict(pd.concat([_pred, _forecast], 
                                    ignore_index= False, 
                                    axis=0))
     
+    # generate stacking metrics and concat to baseestimators 
     se_metrics = se.get_metrics(target = target, 
                                 features = _pred)
 
+    # reindex for timeseries plot
     se_pred.index = pd.concat([_pred, 
                                _forecast], 
                                ignore_index= False, 
