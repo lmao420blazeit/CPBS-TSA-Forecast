@@ -55,6 +55,11 @@ class StackedEstimator(EstimatorTemplate):
         
     def forecast(self, timesteps):
         raise NotImplementedError
+    
+    @property
+    def get_stderr(self):
+        # stderr is the +- stderr(residuals)
+        raise NotImplementedError
             
 
         

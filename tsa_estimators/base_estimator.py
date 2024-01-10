@@ -76,5 +76,5 @@ class BaseEstimator(EstimatorTemplate):
     @property
     def get_stderr(self):
         # stderr is the +- stderr(residuals)
-        pass
+        raise NotImplementedError
     

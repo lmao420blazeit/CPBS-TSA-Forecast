@@ -104,6 +104,9 @@ def main():
     plot_res(_res)
     #st.table(_res.style.highlight_min(axis=1, color='blue'))
 
+    st.subheader("Params:")
+    st.table(pd.concat(_params, ignore_index= False, axis=1).T.drop(["use_boxcox", "lamda", "remove_bias", "initial_seasons"], axis = 1))
+
 
 
 if __name__ == "__main__":
