@@ -4,7 +4,7 @@ from statsmodels.tsa.holtwinters import ExponentialSmoothing, SimpleExpSmoothing
 from tsa_estimators._build_model import build_model
 import streamlit as st
 from st_components.charts import plot_res, ts_plotly_chart
-from st_components.selectbox import variable_selectbox
+from st_components.selectbox import variable_selectbox, estab_radio, name_subfam_selectbox
 from tsa_estimators.custom_estimators import StackedEstimator
 #import sys, inspect
 
@@ -22,7 +22,31 @@ def main():
                         layout="wide")
     st.title("Forecasting App")
 
-    target = variable_selectbox(data)
+    col1, col2, col3 = st.columns([0.25, 0.4, 0.4])
+
+    with col1:
+        estab = estab_radio(data)
+
+    with col2:
+        prod_subfam = name_subfam_selectbox(data)
+
+    with col3:
+        target_var = variable_selectbox()
+
+    if estab == None:
+        #target = data.groupby("MonthYear")[target_var].sum()
+        #target.index = pd.to_datetime(target.index, format='%Y/%m')
+        estab = data["ESTAB_NAME"].unique()
+
+    if prod_subfam == None:
+        prod_subfam = data["NAME_SUBFAM"].unique()
+
+    target = data.query("ESTAB_NAME in @estab and NAME_SUBFAM in @prod_subfam")
+    target = target.groupby("MonthYear")
+    target = target[target_var].sum()
+    
+    target.index = pd.to_datetime(target.index, format='%Y/%m')
+
 
     # defining models
     # suports all statsmodels.tsa models
@@ -94,15 +118,12 @@ def main():
     ts_plotly_chart(target, pd.concat([_pred, _forecast, se_pred], ignore_index= False, axis=0))
 
 
-    # Evaluate the model
-    #mse = mean_squared_error(y_test, predictions)
     st.subheader("Model Evaluation:")
     st.table(_metrics_df.T)
 
 
     st.subheader("Residuals:")
     plot_res(_res)
-    #st.table(_res.style.highlight_min(axis=1, color='blue'))
 
     st.subheader("Params:")
     st.table(pd.concat(_params, ignore_index= False, axis=1).T.drop(["use_boxcox", "lamda", "remove_bias", "initial_seasons"], axis = 1))

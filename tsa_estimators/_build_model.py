@@ -3,7 +3,10 @@ from tsa_estimators.base_estimator import BaseEstimator
 from tsa_estimators.custom_estimators import StackedEstimator
 
 
-def build_model(models: list[BaseEstimator], target: pd.DataFrame, timestamps = None):
+def build_model(models: list[BaseEstimator], 
+                target: pd.DataFrame, 
+                timestamps = None):
+    
     if timestamps == None:
         timestamps = target.index[0]
 
@@ -14,7 +17,9 @@ def build_model(models: list[BaseEstimator], target: pd.DataFrame, timestamps = 
     _res = []
     _forecast = []
     for __model in models:
-        hw = BaseEstimator(model_obj= __model[0], alias= __model[1])
+        hw = BaseEstimator(model_obj= __model[0], 
+                           alias= __model[1])
+        
         _params.append(hw.get_params)
         _metrics_df.append(hw.get_metrics(target, timestamps))
         _pred.append(hw.predict(timestamps))

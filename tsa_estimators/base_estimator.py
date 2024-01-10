@@ -6,7 +6,7 @@ import abc
 
 class EstimatorTemplate(abc.ABC):
     """
-    Estimator Template class for all model methods
+    Estimator Template class for all model methods using sklearn metrics
     """
 
     @abc.abstractmethod
@@ -30,7 +30,7 @@ class BaseEstimator(EstimatorTemplate):
     Interface class for statsmodels.tsa models
     """
     def __init__(self, model_obj, alias = ""):
-        self.model_obj = model_obj # keep track of base model
+        self.model_obj = model_obj # keep track of base object
         self.base_model = model_obj.fit()
         self.alias = (alias if alias not in [None, ""] else self.model_obj.__class__.__name__)
     
@@ -43,8 +43,12 @@ class BaseEstimator(EstimatorTemplate):
     def get_metrics(self, 
                 target, 
                 timestep, 
-                metrics = ["mean_squared_error", "mean_absolute_error", "mean_absolute_percentage_error", "r2_score"]
+                metrics = ["mean_squared_error", 
+                           "mean_absolute_error", 
+                           "mean_absolute_percentage_error", 
+                           "r2_score"]
                 ):
+        
         model_pred = self.predict(timestep)
         metrics_list = [getattr(sklearn.metrics, x) for x in metrics]
         metrics_ = pd.DataFrame(index = [x.__name__ for x in metrics_list],

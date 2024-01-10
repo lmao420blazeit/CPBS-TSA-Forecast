@@ -23,8 +23,6 @@ def plot_res(residuals):
 def ts_plotly_chart(target, data):
     fig = go.Figure()
     fig.add_vline(x=target.index[-1], line_width=3, line_dash="dash", line_color="green")
-    #__colour_pallete = px.colors.qualitative.Alphabet
-    #data = pd.concat([data, forecast], ignore_index= False, axis=0)
 
     for __model in data.columns:
         fig.add_trace(
@@ -47,6 +45,5 @@ def ts_plotly_chart(target, data):
                                 )
                         )
     
-    #__colour_pallete = px.colors.qualitative.Alphabet # reassign colour pallete to original values
 
     return st.plotly_chart(fig, use_container_width=True)
