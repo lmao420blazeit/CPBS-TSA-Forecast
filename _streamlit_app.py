@@ -26,14 +26,39 @@ def main():
 
     # defining models
     # suports all statsmodels.tsa models
-    __models = [SimpleExpSmoothing(endog = target, 
+    __models = [[SimpleExpSmoothing(endog = target, 
                                    initialization_method="estimated"),
-                ExponentialSmoothing(endog = target, 
+                                   "SimpleExponentialSmoothing"],
+                [ExponentialSmoothing(endog = target, 
                                      seasonal_periods=12, 
                                      trend="add", 
                                      seasonal="add", 
                                      use_boxcox=False, 
-                                     initialization_method="estimated")]
+                                     initialization_method="estimated"),
+                                     "HW-Additive"],
+                [ExponentialSmoothing(endog = target, 
+                                     seasonal_periods=12, 
+                                     trend="add", 
+                                     seasonal="mul", 
+                                     use_boxcox=False, 
+                                     initialization_method="estimated"),
+                                     "HW-Mult"],
+                [ExponentialSmoothing(endog = target, 
+                                     seasonal_periods=12, 
+                                     trend="add", 
+                                     seasonal="add", 
+                                     use_boxcox=False,
+                                     damped_trend = True,
+                                     initialization_method="estimated"),
+                                     "HW-Additive-damped-trend"],
+                [ExponentialSmoothing(endog = target, 
+                                     seasonal_periods=12, 
+                                     trend="add", 
+                                     seasonal="mul", 
+                                     use_boxcox=False,
+                                     damped_trend = True,
+                                     initialization_method="estimated"),
+                                     "HW-Additive-damped-trend"]]                                     
     
 
     # build models

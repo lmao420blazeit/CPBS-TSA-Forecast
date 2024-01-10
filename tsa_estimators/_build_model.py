@@ -14,7 +14,7 @@ def build_model(models: list[BaseEstimator], target: pd.DataFrame, timestamps = 
     _res = []
     _forecast = []
     for __model in models:
-        hw = BaseEstimator(model_obj= __model)
+        hw = BaseEstimator(model_obj= __model[0], alias= __model[1])
         _params.append(hw.get_params)
         _metrics_df.append(hw.get_metrics(target, timestamps))
         _pred.append(hw.predict(timestamps))
