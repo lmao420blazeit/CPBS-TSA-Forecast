@@ -5,27 +5,29 @@ from tsa_estimators.base_estimator import EstimatorTemplate
 class StackedEstimator(EstimatorTemplate):
 
     def __init__(self, 
-                 stacking_method,
+                 meta_classifier,
                  stackeddataset,
                  target, 
+                 alias = "",
                  **kwargs):
         
-        self.model_obj = stacking_method
-        self.stacking_method = self._fit_model(stackeddataset,
+        self.model_obj = meta_classifier
+        self.meta_classifier = self._fit_model(stackeddataset,
                                                target,
                                                **kwargs)
+        self.alias = (alias if alias not in [None, ""] else self.model_obj.__class__.__name__)
 
     def predict(self, timestep):
-        df = pd.DataFrame(self.stacking_method.predict(timestep))
+        df = pd.DataFrame(self.meta_classifier.predict(timestep))
         df.columns = [str(self.model_obj.__class__.__name__)]
         return(df)        
 
     @property
     def get_params(self):
         params = pd.DataFrame(
-            index=[__key for __key in self.stacking_method.feature_names_in_]
+            index=[__key for __key in self.meta_classifier.feature_names_in_]
         )
-        params[self.model_obj.__class__.__name__] = self.stacking_method.coef_
+        params[self.model_obj.__class__.__name__] = self.meta_classifier.coef_
         return(params)
 
     def get_metrics(self, 

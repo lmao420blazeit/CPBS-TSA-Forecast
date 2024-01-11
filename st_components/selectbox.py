@@ -22,11 +22,17 @@ def variable_selectbox():
         #target.index = pd.to_datetime(target.index, format='%Y/%m')    
         return "PROFIT_SALES"    
     
-def name_subfam_selectbox(data):
+def name_fam_selectbox(data):
     # Create the selectbox
-    selected_option = st.selectbox("Filter by product subfamily.", 
-                                   options= [None] + [i for i in data["NAME_SUBFAM"].unique()])
+    selected_option = st.selectbox("Filter by product family.", 
+                                   options= [None] + [i for i in data["NAME_FAM"].unique()])
     
+    return selected_option
+
+def client_selectbox(data):
+    selected_option = st.selectbox("Filter by client.", 
+                                   options= [None] + [i for i in data["CLI"].unique()])
+    #return data.query("ESTAB_NAME == '{i}'")
     return selected_option
 
 
@@ -34,7 +40,24 @@ def estab_radio(data):
     estab = st.radio(
         "Filter by establishment name. :house:",
         options=[None] + [i for i in data["ESTAB_NAME"].unique()],
-        key = "estab_rad"
+        key = "estab_rad",
+        horizontal= True
+
     )    
     #return data.query("ESTAB_NAME == '{i}'")
     return estab
+
+def metrics_selector():
+    metrics = ["mean_squared_error", 
+                "mean_absolute_error", 
+                "mean_absolute_percentage_error", 
+                "r2_score",
+                "explained_variance_score",
+                "mean_squared_log_error"]
+    
+    options = st.multiselect(
+        'Select the model metrics.',
+        default = metrics[:3],
+        options = metrics)
+    
+    return options

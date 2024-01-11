@@ -5,7 +5,13 @@ from tsa_estimators.custom_estimators import StackedEstimator
 
 def build_model(models: list[BaseEstimator], 
                 target: pd.DataFrame, 
-                timestamps = None):
+                timestamps = None,
+                metrics = ["mean_squared_error", 
+                           "mean_absolute_error", 
+                           "mean_absolute_percentage_error", 
+                           "r2_score",
+                           "explained_variance_score",
+                           "mean_squared_log_error"]):
     
     if timestamps == None:
         timestamps = target.index[0]
@@ -21,7 +27,7 @@ def build_model(models: list[BaseEstimator],
                            alias= __model[1])
         
         _params.append(hw.get_params)
-        _metrics_df.append(hw.get_metrics(target, timestamps))
+        _metrics_df.append(hw.get_metrics(target, timestamps, metrics))
         _pred.append(hw.predict(timestamps))
         _res.append(hw.get_residuals)
         _forecast.append(hw.forecast(5))
