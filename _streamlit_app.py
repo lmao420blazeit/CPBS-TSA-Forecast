@@ -66,6 +66,7 @@ def main():
     if client == None:
         client = data["CLI"].unique()
 
+    # filter the data
     target = data.query("ESTAB_NAME in @estab and NAME_FAM in @prod_fam and CLI in @client")
 
     target = target.groupby("MonthYear")
@@ -75,7 +76,7 @@ def main():
 
     # defining models
     # suports all statsmodels.tsa models
-    # list[[model_object: statsmodels.tsa, alias: str]]
+    # __models: list[[model_object: statsmodels.tsa, alias: str]]
     __models = [[SimpleExpSmoothing(endog = target, 
                                    initialization_method="estimated"),
                                    "Exponential Smoothing"],
