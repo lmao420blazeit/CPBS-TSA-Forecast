@@ -74,6 +74,8 @@ def main():
     
     target.index = pd.to_datetime(target.index, format='%Y/%m')
 
+    st.divider()  # 👈 Draws a horizontal rule
+
     # defining models
     # suports all statsmodels.tsa models
     # __models: list[[model_object: statsmodels.tsa, alias: str]]
@@ -174,7 +176,6 @@ def main():
     se_pred = pd.concat([se_pred, _forecast], ignore_index= False, axis=1)
     se_pred.columns = se_pred.columns.to_series().apply(format_and_capitalize)
     st.table(_forecast)
-
 
 
 if __name__ == "__main__":
