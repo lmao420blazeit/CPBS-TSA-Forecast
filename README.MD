@@ -1,6 +1,7 @@
 # CPBS Demo Forecasting App using univariate TSA models
 
-A brief description of your project goes here.
+https://cpbs-tsa-forecast.streamlit.app/
+Sandbox project to test time series forecasting models in a small business dataset using statsmodels, sklearn and streamlit.
 
 ## Table of Contents
 
@@ -11,11 +12,8 @@ A brief description of your project goes here.
   - [Getting Started](#getting-started)
     - [Prerequisites](#prerequisites)
     - [Installation](#installation)
-  - [Usage](#usage)
 
 ## Introduction
-
-Briefly introduce your project, providing context and explaining its purpose.
 
 ### Scope of the project
 
@@ -45,26 +43,69 @@ Supporting all statsmodels.tsa models as well as others:
     - ARMA
     - ARIMA
 
-### Ensemble model constructor with TSA as base models
+### Stacking model constructor with TSA as base models
 
 Supports any sklearn.linear_model class:
     - ElasticNet
     - Ridge
     - Lasso
     - LinearRegression
-    - more to confirm (in theory should be able to support everyone)
+    - more to confirm (in theory all should be supported)
 
 ## Getting Started
 
-Provide instructions for setting up and running your project. Include information about prerequisites and installation steps.
+#### Passing models constructor object list
+
+Each model should be passed as a list [model_object: statsmodels.tsa, alias]. If no model alias is given, consider an empty string.
+
+``` Python
+# models: list[[model_object: statsmodels.tsa, alias: str]]
+__models = [[SimpleExpSmoothing(endog = target, 
+                                initialization_method="estimated"),
+                                ""],
+            [Holt(endog = target,
+                    initialization_method = "estimated", 
+                    exponential = True),
+                    "Holt-model"],
+            [ExponentialSmoothing(endog = target, 
+                                    seasonal_periods=12, 
+                                    trend="add", 
+                                    seasonal="add", 
+                                    use_boxcox=False, 
+                                    initialization_method="estimated"),
+                                    "HW-Additive"],
+            [ExponentialSmoothing(endog = target, 
+                                    seasonal_periods=12, 
+                                    trend="add", 
+                                    seasonal="mul", 
+                                    use_boxcox=False, 
+                                    initialization_method="estimated"),
+                                    "HW-Multiplicative"],
+            [ExponentialSmoothing(endog = target, 
+                                    seasonal_periods=12, 
+                                    trend="add", 
+                                    seasonal="add", 
+                                    use_boxcox=False,
+                                    damped_trend = True,
+                                    initialization_method="estimated"),
+                                    "HW-Additive-damped-trend"],
+            [ExponentialSmoothing(endog = target, 
+                                    seasonal_periods=12, 
+                                    trend="add", 
+                                    seasonal="mul", 
+                                    use_boxcox=False,
+                                    damped_trend = True,
+                                    initialization_method="estimated"),
+                                    "HW-Multiplicative-damped-trend"]] 
+```
+
+#### Using stacked models
 
 ### Prerequisites
 
-List any software, libraries, or dependencies that need to be installed before running your project.
+The project was built on Python 3.10.6.
 
 ### Installation
-
-Provide step-by-step instructions on how to install and set up your project.
 
 ```bash
 # Example installation commands
