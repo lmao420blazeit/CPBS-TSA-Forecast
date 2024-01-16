@@ -1,6 +1,5 @@
-# CPBS Demo Forecasting App using univariate TSA models
+# [Forecasting App](https://link-url-here.org) using univariate TSA models
 
-https://cpbs-tsa-forecast.streamlit.app/
 Sandbox project to test time series forecasting models in a small business dataset using statsmodels, sklearn and streamlit.
 
 ## Table of Contents
@@ -12,8 +11,59 @@ Sandbox project to test time series forecasting models in a small business datas
   - [Getting Started](#getting-started)
     - [Prerequisites](#prerequisites)
     - [Installation](#installation)
+  - [Deployment](#deployment)
 
 ## Introduction
+
+Project is divided in streamlit components in st_components folder and estimators components in tsa_estimators folder.
+
+### File structure
+
+project/
+│
+├── docs/
+│   ├── README.md
+│   ├── design_docs.md
+│   └── user_guide.md
+│
+├── st_components/
+│   ├── charts.py
+│   ├── selectbox.py
+│
+├── tsa_estimators/
+│   ├── _build_model.py_
+│   ├── custom_estimators.py_
+│   └── base_estimator.py
+│
+├── _streamlit_app.py
+├── utils.py
+├── requirements.txt
+└── README.md
+
+### Design for dynamical models
+
+![TSA overview](img/tsa_estimators.png)
+
+tsa_estimators folder defines the main classes for this project. Since the purpose was early on established as evaluating different models using the same metrics and functions, an abstract class was created as template and each estimator class was then derived from this class. 
+\
+This provides a base line to dynamically add new models and to compare such models using 
+\
+The build_model function is used to concat the results from every model and return a list of dataframes which provides a very good interface for streamlit.
+
+  +------+        +------+
+  | Input|        | Input|
+  +------+        +------+
+       \          /
+        \        /
+         +------+
+            Node
+         +------+
+              \
+               \
+                \
+                +------+
+                 Output
+                +------+
 
 ### Scope of the project
 
@@ -30,7 +80,9 @@ Sandbox project to test time series forecasting models in a small business datas
 
 - Optimization of model params (such as GridSearchCV)
 - Normal tests for residuals (such as Shapiro Wilk)
+- Homoscedasticity tests for residuals
 - Extensive user interface to add and customize models outside of python script
+- Standard errors of each model (it would make the UI cluttered) but you can easily implement it via implementation of BaseEstimator.get_stderr method
 
 ## Features
 
@@ -113,3 +165,7 @@ git clone https://github.com/yourusername/yourproject.git
 cd yourproject
 pip install -r requirements.txt
 run in console: streamlit run _streamlit_app.py
+```
+## Deployment
+
+The project was deployed using streamlit native serverless option. 
