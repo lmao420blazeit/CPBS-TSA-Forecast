@@ -11,7 +11,7 @@ def build_model(models: list[BaseEstimator],
                            "mean_absolute_percentage_error", 
                            "r2_score",
                            "explained_variance_score",
-                           "mean_squared_log_error"]):
+                           "mean_squared_log_error"]) -> list[pd.DataFrame]:
     
     if timestamps == None:
         timestamps = target.index[0]

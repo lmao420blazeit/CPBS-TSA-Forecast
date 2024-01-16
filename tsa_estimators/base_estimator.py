@@ -10,19 +10,19 @@ class EstimatorTemplate(abc.ABC):
     """
 
     @abc.abstractmethod
-    def get_metrics():
+    def get_metrics() -> pd.DataFrame:
         pass
 
     @abc.abstractmethod
-    def get_params():
+    def get_params() -> pd.DataFrame:
         pass
 
     @abc.abstractmethod
-    def predict():
+    def predict() -> pd.DataFrame:
         pass
 
-    @abc.abstractclassmethod
-    def forecast():
+    @abc.abstractmethod
+    def forecast() -> pd.DataFrame:
         pass
 
 class BaseEstimator(EstimatorTemplate):
