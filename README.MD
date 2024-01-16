@@ -46,7 +46,7 @@ This provides a base line to dynamically add new models and to compare such mode
 The *build_model* function is used to concat the results from every model and return a list of dataframes which provides a very good interface for streamlit.
 ```
   +------+        +------+          +------+
-  | Input|        | Input|          | Input|
+|BaseModel|     |BaseModel|        |BaseModel|
   +------+        +------+          +------+
        \          /               /
         \        /           /
