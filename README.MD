@@ -21,11 +21,6 @@ Project is divided in streamlit components in st_components folder and estimator
 ```
 project/
 │
-├── docs/
-│   ├── README.md
-│   ├── design_docs.md
-│   └── user_guide.md
-│
 ├── st_components/
 │   ├── charts.py
 │   ├── selectbox.py
@@ -50,13 +45,13 @@ This provides a base line to dynamically add new models and to compare such mode
 \
 The build_model function is used to concat the results from every model and return a list of dataframes which provides a very good interface for streamlit.
 ```
-  +------+        +------+
-  | Input|        | Input|
-  +------+        +------+
-       \          /
-        \        /
-         +------+
-            Node
+  +------+        +------+          +------+
+  | Input|        | Input|          | Input|
+  +------+        +------+          +------+
+       \          /               /
+        \        /           /
+         +------+       /
+       build_models /
          +------+
               \
                \
