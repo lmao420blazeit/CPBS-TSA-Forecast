@@ -1,6 +1,6 @@
 # [Forecasting App](https://link-url-here.org) using univariate TSA models
 
-Sandbox project to test time series forecasting models in a small business dataset using statsmodels, sklearn and streamlit.
+Sandbox project to dynamically test custom time series forecasting models in a small business dataset using statsmodels, sklearn and streamlit.
 
 ## Table of Contents
 
@@ -15,7 +15,7 @@ Sandbox project to test time series forecasting models in a small business datas
 
 ## Introduction
 
-Project is divided in streamlit components in st_components folder and estimators components in tsa_estimators folder.
+Project is divided in streamlit components in *st_components* folder and estimators components in *tsa_estimators* folder.
 
 ### File structure
 ```
@@ -39,11 +39,11 @@ project/
 
 ![TSA overview](img/tsa_estimators.png)
 
-tsa_estimators folder defines the main classes for this project. Since the purpose was early on established as evaluating different models using the same metrics and functions, an abstract class was created as template and each estimator class was then derived from this class. 
+*tsa_estimators* folder defines the main classes for this project. Since the purpose was early on established as evaluating different models using the same metrics and functions, an abstract class was created as template and each estimator class was then derived from this class. 
 \
 This provides a base line to dynamically add new models and to compare such models using 
 \
-The build_model function is used to concat the results from every model and return a list of dataframes which provides a very good interface for streamlit.
+The *build_model* function is used to concat the results from every model and return a list of dataframes which provides a very good interface for streamlit.
 ```
   +------+        +------+          +------+
   | Input|        | Input|          | Input|
@@ -103,7 +103,7 @@ Supports any sklearn.linear_model class:
 
 #### Passing models constructor object list
 
-Each model should be passed as a list [model_object: statsmodels.tsa, alias]. If no model alias is given, consider an empty string.
+Each model should be passed as a *list [model_object: statsmodels.tsa, alias]*. If no model alias is given, consider an empty string.
 
 ``` Python
 # models: list[[model_object: statsmodels.tsa, alias: str]]
@@ -148,6 +148,19 @@ __models = [[SimpleExpSmoothing(endog = target,
 
 #### Using stacked models
 
+Stacked models can't be dynamically implemented, but this is how they work.
+
+``` Python
+# stacking estimator
+se = StackedEstimator(meta_classifier = LinearRegression(),
+                    stackeddataset = _pred,
+                    target = target,
+                    alias = "Stacking estimator (LR)"
+                    )
+```
+
+*meta_classifier* receives an instance of the meta classifier class ([see supported classifiers](#Passing models constructor object list)), *stackeddataset* param receives the predictions dataframe from all the base estimators and *target* references the target variable.
+
 ### Prerequisites
 
 The project was built on Python 3.10.6.
@@ -163,4 +176,4 @@ run in console: streamlit run _streamlit_app.py
 ```
 ## Deployment
 
-The project was deployed using streamlit native serverless option. 
+The project was deployed using streamlit native serverless. 
