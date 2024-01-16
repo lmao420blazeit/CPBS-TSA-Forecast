@@ -84,20 +84,20 @@ The build_model function is used to concat the results from every model and retu
 ### Custom model constructor
 
 Supporting all statsmodels.tsa models as well as others:
-    - Holt
-    - Holt Winters
-    - SimpleExpSmoothing
-    - ARMA
-    - ARIMA
+- Holt
+- Holt Winters
+- SimpleExpSmoothing
+- ARMA
+- ARIMA
 
 ### Stacking model constructor with TSA as base models
 
 Supports any sklearn.linear_model class:
-    - ElasticNet
-    - Ridge
-    - Lasso
-    - LinearRegression
-    - more to confirm (in theory all should be supported)
+- ElasticNet
+- Ridge
+- Lasso
+- LinearRegression
+- more to confirm (in theory all should be supported)
 
 ## Getting Started
 
