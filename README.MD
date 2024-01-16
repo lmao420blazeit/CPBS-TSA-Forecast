@@ -18,7 +18,7 @@ Sandbox project to test time series forecasting models in a small business datas
 Project is divided in streamlit components in st_components folder and estimators components in tsa_estimators folder.
 
 ### File structure
-
+```
 project/
 │
 ├── docs/
@@ -39,7 +39,7 @@ project/
 ├── utils.py
 ├── requirements.txt
 └── README.md
-
+```
 ### Design for dynamical models
 
 ![TSA overview](img/tsa_estimators.png)
@@ -49,7 +49,7 @@ tsa_estimators folder defines the main classes for this project. Since the purpo
 This provides a base line to dynamically add new models and to compare such models using 
 \
 The build_model function is used to concat the results from every model and return a list of dataframes which provides a very good interface for streamlit.
-
+```
   +------+        +------+
   | Input|        | Input|
   +------+        +------+
@@ -64,7 +64,7 @@ The build_model function is used to concat the results from every model and retu
                 +------+
                  Output
                 +------+
-
+```
 ### Scope of the project
 
 - Compare the results of different TSA models
