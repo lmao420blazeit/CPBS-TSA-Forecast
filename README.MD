@@ -1,4 +1,4 @@
-# [Forecasting App](https://link-url-here.org) using univariate TSA models
+# [Forecasting App](https://cpbs-tsa-forecast.streamlit.app/) using univariate TSA models
 
 Sandbox project to dynamically test custom time series forecasting models in a small business dataset using statsmodels, sklearn and streamlit.
 
