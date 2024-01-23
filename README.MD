@@ -168,7 +168,7 @@ The project was built on Python 3.10.6.
 
 ```bash
 # Example installation commands
-git clone https://github.com/yourusername/yourproject.git
+git clone https://github.com/lmao420blazeit/CPBS-TSA-Forecast.git
 cd yourproject
 pip install -r requirements.txt
 run in console: streamlit run _streamlit_app.py
