@@ -2,6 +2,9 @@
 
 Sandbox project to dynamically test custom time series forecasting models in a small business dataset using statsmodels, sklearn and streamlit.
 
+![Local Image](assets/forecasting.png)
+![Local Image](assets/forecasting2.png)
+
 ## Table of Contents
 
 - [Table of Contents](#table-of-contents)
